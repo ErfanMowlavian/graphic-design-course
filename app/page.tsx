@@ -11,7 +11,7 @@ export default function Home() {
       <Features />
       <section className="relative h-screen w-full overflow-hidden bg-black">
         <img
-          src="ostad.gif"
+          src="https://images.steamusercontent.com/ugc/862852298937140849/E33E1E045FCCC35DF0CECFB7C7E853CD19CCDA34/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
