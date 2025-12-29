@@ -18,6 +18,7 @@ export default function Features() {
   ];
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       itemsRef.current.forEach((item) => {
         if (!item) return;

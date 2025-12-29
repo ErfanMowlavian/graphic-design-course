@@ -21,7 +21,7 @@ export default function WavyBackground({ className, children }: WavyBackgroundPr
       canvas = document.createElement("canvas");
       canvasRef.current = canvas;
       canvas.style.position = "absolute";
-      (canvas.style as any).inset = "0";
+      canvas.style.setProperty("inset", "0");
       canvas.style.zIndex = "0";
       canvas.style.pointerEvents = "none";
       wrap.appendChild(canvas);

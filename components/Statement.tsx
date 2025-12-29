@@ -10,6 +10,7 @@ export default function Statement() {
   const textRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       if (textRef.current) {
         gsap.fromTo(
