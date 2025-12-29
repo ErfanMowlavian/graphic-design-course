@@ -19,6 +19,7 @@ export default function Home() {
         <DvdText
           text="استاد تورو خدا نمره بده ساعت 3 نصف شبه"
           className="absolute inset-0 z-10 pointer-events-none"
+          textClassName="select-none text-white/90 text-base md:text-xl lg:text-2xl"
         />
       </section>
     </main>

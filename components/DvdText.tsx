@@ -5,9 +5,10 @@ import { useEffect, useRef } from "react";
 type DvdTextProps = {
   text: string;
   className?: string;
+  textClassName?: string;
 };
 
-export default function DvdText({ text, className }: DvdTextProps) {
+export default function DvdText({ text, className, textClassName }: DvdTextProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -100,11 +101,10 @@ export default function DvdText({ text, className }: DvdTextProps) {
       <div
         ref={itemRef}
         style={{ position: "absolute", left: 0, top: 0, transform: "translate(0px, 0px)" }}
-        className="select-none text-white/90 text-2xl md:text-3xl lg:text-4xl"
+        className={textClassName ?? "select-none text-white/90 text-2xl md:text-3xl lg:text-4xl"}
       >
         {text}
       </div>
     </div>
   );
 }
-

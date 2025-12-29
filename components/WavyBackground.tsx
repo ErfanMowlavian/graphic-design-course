@@ -50,16 +50,18 @@ export default function WavyBackground({ className, children }: WavyBackgroundPr
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, width, height);
 
-      // Waves
-      const layers = 5;
+      const reduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const small = typeof window !== "undefined" && window.innerWidth < 768;
+      const layers = reduced ? 2 : small ? 3 : 5;
       ctx.shadowColor = "rgba(120, 220, 255, 0.25)";
-      ctx.shadowBlur = 22;
+      ctx.shadowBlur = small || reduced ? 10 : 22;
       for (let i = 0; i < layers; i++) {
         const amp = 28 + i * 16;
         const freq = 0.001 + i * 0.0005;
         const speed = 0.5 + i * 0.15;
         ctx.beginPath();
-        for (let x = 0; x <= width; x += 6) {
+        const step = small || reduced ? 8 : 6;
+        for (let x = 0; x <= width; x += step) {
           const y =
             height * 0.5 +
             // primary wave
@@ -78,7 +80,7 @@ export default function WavyBackground({ className, children }: WavyBackgroundPr
         grad.addColorStop(0, c1);
         grad.addColorStop(1, c2);
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 50;
+        ctx.lineWidth = small || reduced ? 28 : 50;
         ctx.stroke();
       }
       rafRef.current = requestAnimationFrame(render);

@@ -17,9 +17,13 @@ export default function Sparkles({ className, intensity = 60 }: SparklesProps) {
     if (!wrap) return;
 
     const isRTL = typeof document !== "undefined" && document?.dir === "rtl";
+    const reduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const small = typeof window !== "undefined" && window.innerWidth < 768;
 
     const rect = wrap.getBoundingClientRect();
-    const count = intensity;
+    let count = intensity;
+    if (reduced) count = Math.min(count, 15);
+    else if (small) count = Math.floor(count * 0.5);
     particlesRef.current = [];
     wrap.innerHTML = "";
 
@@ -34,7 +38,7 @@ export default function Sparkles({ className, intensity = 60 }: SparklesProps) {
       p.style.pointerEvents = "none";
       p.style.background =
         "radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0) 100%)";
-      p.style.filter = "drop-shadow(0 0 6px rgba(255,255,255,0.35))";
+      p.style.filter = small || reduced ? "drop-shadow(0 0 3px rgba(255,255,255,0.25))" : "drop-shadow(0 0 6px rgba(255,255,255,0.35))";
       p.style.opacity = "0";
       p.style.transform = "translate3d(0,0,0) scale(0.8)";
       wrap.appendChild(p);
@@ -43,19 +47,20 @@ export default function Sparkles({ className, intensity = 60 }: SparklesProps) {
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     particlesRef.current.forEach((el, idx) => {
-      const driftX = (isRTL ? 1 : -1) * (Math.random() * 18 + 6);
-      const driftY = -(Math.random() * 22 + 8);
+      const driftScale = reduced ? 0.4 : small ? 0.7 : 1;
+      const driftX = (isRTL ? 1 : -1) * (Math.random() * 18 + 6) * driftScale;
+      const driftY = -(Math.random() * 22 + 8) * driftScale;
       tl.to(
         el,
         {
-          opacity: gsap.utils.random(0.7, 1),
-          scale: gsap.utils.random(0.9, 1.3),
+          opacity: gsap.utils.random(reduced ? 0.5 : 0.7, 1),
+          scale: gsap.utils.random(0.9, small ? 1.1 : 1.3),
           x: `+=${driftX}`,
           y: `+=${driftY}`,
-          duration: gsap.utils.random(0.9, 1.6),
+          duration: gsap.utils.random(0.9, small ? 1.3 : 1.6),
           repeat: -1,
           yoyo: true,
-          repeatDelay: gsap.utils.random(0.3, 1),
+          repeatDelay: gsap.utils.random(0.3, small ? 0.8 : 1),
         },
         idx * 0.015
       );
