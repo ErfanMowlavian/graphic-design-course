@@ -10,7 +10,7 @@ export default function Home() {
       <Features />
       <section className="relative h-screen w-full overflow-hidden bg-black">
         <img
-          src="/ostad.gif"
+          src="https://i.pinimg.com/originals/bd/ec/4b/bdec4b1e34dc84a380e58f596766182d.gif"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
